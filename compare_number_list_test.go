@@ -36,7 +36,7 @@ func TestContainerContains(t *testing.T) {
 			expected:  false,
 		},
 	} {
-		c := &compare.Container{Numbers: tt.numbers}
+		c := compare.NewContainer(tt.numbers)
 		assert.Equal(t, tt.expected, c.Contains(tt.candidate))
 	}
 
@@ -44,7 +44,7 @@ func TestContainerContains(t *testing.T) {
 func BenchmarkContainerContains(b *testing.B) {
 	rand.Seed(1)
 	randomNumbers := rand.Perm(1000000)
-	cBig := &compare.Container{Numbers: randomNumbers}
+	cBig := compare.NewContainer(randomNumbers)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cBig.Contains(i)
