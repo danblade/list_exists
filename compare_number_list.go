@@ -1,21 +1,18 @@
 package compare
 
-import (
-	"sort"
-)
-
 type Container struct {
-	Numbers []int
+	Numbers map[int]bool
 }
 
-func NewContainer(n []int) *Container {
-	sort.Ints(n)
-	return &Container{Numbers: n}
+func NewContainer(numbers []int) *Container {
+	m := make(map[int]bool, len(numbers))
+	for _, n := range numbers {
+		m[n] = true
+	}
+	return &Container{Numbers: m}
 }
 
 func (c *Container) Contains(needle int) bool {
-	j := sort.Search(len(c.Numbers), func(i int) bool { return c.Numbers[i] >= needle })
-	return j < len(c.Numbers) && c.Numbers[j] == needle
-	// return !(j == -1 || c.Numbers[j] != needle)
-
+	_, present := c.Numbers[needle]
+	return present
 }
